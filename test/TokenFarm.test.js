@@ -25,14 +25,14 @@ contract('TokenFarm', ([owner, investor]) => {
     // Send tokens to investor
     await daiToken.transfer(investor, tokens('100'), { from: owner })
   })
-
+    //dai token deplyment test
   describe('Mock DAI deployment', async () => {
     it('has a name', async () => {
       const name = await daiToken.name()
       assert.equal(name, 'Mock DAI Token')
     })
   })
-
+    // Dapp deployment testing 
   describe('Dapp Token deployment', async () => {
     it('has a name', async () => {
       const name = await dappToken.name()
@@ -40,13 +40,14 @@ contract('TokenFarm', ([owner, investor]) => {
     })
   })
 
+    //staking function testing 
   describe('Token Farm deployment', async () => {
     it('has a name', async () => {
       const name = await tokenFarm.name()
       assert.equal(name, 'Dapp Token Farm')
     })
 
-    it('contract has tokens', async () => {
+    it('contract has 2 tokens', async () => {
       let balance = await dappToken.balanceOf(tokenFarm.address)
       assert.equal(balance.toString(), tokens('1000000'))
     })
@@ -91,7 +92,7 @@ contract('TokenFarm', ([owner, investor]) => {
       // Unstake tokens
       await tokenFarm.unstakeTokens({ from: investor })
 
-      // Check results after unstaking
+      // Check balances after unstaking
       result = await daiToken.balanceOf(investor)
       assert.equal(result.toString(), tokens('100'), 'investor Mock DAI wallet balance correct after staking')
 

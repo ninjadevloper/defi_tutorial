@@ -3,12 +3,17 @@ pragma solidity ^0.5.0;
 import "./DappToken.sol";
 import "./DaiToken.sol";
 
+//step1. Deploy Mock Dai
+//step2. Deploy Dapp
+//step3. deploy TokenFarm
+
 contract TokenFarm {
     string public name = "Dapp Token Farm";
     address public owner;
     DappToken public dappToken;
     DaiToken public daiToken;
 
+        //mapping to determine current state of staking
     address[] public stakers;
     mapping(address => uint) public stakingBalance;
     mapping(address => bool) public hasStaked;
@@ -19,7 +24,7 @@ contract TokenFarm {
         daiToken = _daiToken;
         owner = msg.sender;
     }
-
+        //1. stake tokens(deposit)\nb function
     function stakeTokens(uint _amount) public {
         // Require amount greater than 0
         require(_amount > 0, "amount cannot be 0");
@@ -40,7 +45,7 @@ contract TokenFarm {
         hasStaked[msg.sender] = true;
     }
 
-    // Unstaking Tokens (Withdraw)
+    //2. Unstaking Tokens (Withdraw) function 
     function unstakeTokens() public {
         // Fetch staking balance
         uint balance = stakingBalance[msg.sender];
@@ -58,7 +63,7 @@ contract TokenFarm {
         isStaking[msg.sender] = false;
     }
 
-    // Issuing Tokens
+    //3. Issuing Tokens function
     function issueTokens() public {
         // Only owner can call this function
         require(msg.sender == owner, "caller must be the owner");
